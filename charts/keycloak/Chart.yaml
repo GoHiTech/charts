@@ -25,7 +25,7 @@ appVersion: "1.16.0"
 
 dependencies:
   - name: keycloak
-    version: ">0.1.0"
+    version: ">0.0.0"
   - name: postgresql
     version: "~12.4.2"
     repository: "https://charts.bitnami.com/bitnami"
