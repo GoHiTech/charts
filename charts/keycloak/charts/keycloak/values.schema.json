@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "properties": {
+    "admin": {"type": "object", "required": ["name", "password"], "properties": {
+      "name": {"type": "string"},
+      "password": {"type": "string"}
+    }},
+    "hostname": {"type": "object", "required": ["path", "port", "strict", "strict_backchannel"], "properties": {
+      "admin": {"type": "string"},
+      "admin_url": {"type": "string"},
+      "name": {"type": "string"},
+      "path": {"type": "string"},
+      "port": {"type": "integer", "minimum": -1, "maximum": 65535},
+      "strinct": {"type": "boolean"},
+      "strict_backchannel": {"type": "boolean"},
+      "url": {"type": "string"}
+    }},
+    "image": {"type": "object", "required": ["repository","tag"], "properties": {
+      "repository": {"type": "string"},
+      "tag": {"type": "string"}
+    }},
+    "proxy": {"type": "string", "enum": ["none", "edge", "reencrypt", "passthrough"]},
+    "service": {"type": "object", "required": ["type", "port"], "properties": {
+      "type": {"type": "string", "enum": ["ClusterIP", "LoadBalancer"]},
+      "port": {"type": "integer", "minimum": 8080}
+    }},
+    "vault": {"type": "object", "required": ["directory"], "properties": {
+      "directory": {"type": "string"},
+      "type": {"type": "string", "enum": ["file"]}
+    }}
+  },
+  "required": ["admin","image","service","proxy"],
+  "title": "Values",
+  "type": "object"
+}

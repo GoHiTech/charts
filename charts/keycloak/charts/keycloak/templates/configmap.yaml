@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "keycloak.fullname" . }}
+  labels:
+    {{- include "keycloak.labels" . | nindent 4 }}
+data:
+  keycloak.conf: |
+    db={{ .Values.database.type }}
+    db-username={{ .Values.database.username }}
+    db-password={{ .Values.database.password }}
+    db-url={{ .Values.database.url }}
+    health-enabled={{ .Values.health_enabled }}
+    hostname={{ .Values.hostname.name }}
+    hostname-strict={{ .Values.hostname.strict }}
+    #hostname-url=https://{{ .Values.hostname.name }}:{{ .Values.service.port }}{{ with (index .Values.ingress.hosts 0) }}{{ with (index .paths 0) }}{{ .path }}{{ end }}{{ end }}
+    https-certificate-file=${kc.home.dir}conf/server.crt.pem
+    https-certificate-key-file=${kc.home.dir}conf/server.key.pem
+    metrics-enabled={{ .Values.metrics_enabled }}
+    proxy={{ .Values.proxy }}
+    spi-sticky-session-encoder-infinispan-should-attach-route=false
+    vault-dir={{ .Values.vault.directory }}
