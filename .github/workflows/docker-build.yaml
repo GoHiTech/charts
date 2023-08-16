@@ -75,6 +75,7 @@ jobs:
             echo "DOCKER_IMAGE_TAG=0.1.0" >> "$GITHUB_ENV"
           else
             echo "DOCKER_IMAGE_TAG=${TAG}" >> "$GITHUB_ENV"
+          fi
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
