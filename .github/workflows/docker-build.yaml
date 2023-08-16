@@ -35,8 +35,7 @@ jobs:
             contexts="${contexts}${delim}\"${context}\""
             delim=", "
           done < <(git diff --name-only HEAD^ HEAD)
-          #echo "contexts=[${contexts}]" >> "$GITHUB_OUTPUT"
-          echo "::set-output name=contexts::[${contexts}]"
+          echo "contexts=[${contexts}]" >> "$GITHUB_OUTPUT"
 
   build-and-push-image:
     if: ${{ needs.check.outputs.contexts != '' }}
@@ -71,7 +70,11 @@ jobs:
 
       - name: Get Docker image tag
         run: |
-          echo "DOCKER_IMAGE_TAG=0.1.0" >> "$GITHUB_ENV"
+          TAG=$(sed -n 's/^ARG DOCKER_IMAGE_TAG=\(.*\)$/\1/p' build/${{ matrix.context }}/Dockerfile)
+          if [ -z $TAG ]; then
+            echo "DOCKER_IMAGE_TAG=0.1.0" >> "$GITHUB_ENV"
+          else
+            echo "DOCKER_IMAGE_TAG=${TAG}" >> "$GITHUB_ENV"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
