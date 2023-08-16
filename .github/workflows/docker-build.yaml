@@ -32,16 +32,17 @@ jobs:
             context=$(echo $file |cut -d '/' -f 2)
             [ -z $context ] && continue
             [[ $context == ${contexts##*,} ]] && continue
-            contexts="${contexts}${delim}${context}"
+            contexts="${contexts}${delim}\"${context}\""
             delim=", "
           done < <(git diff --name-only HEAD^ HEAD)
-          echo "contexts=[${contexts}]" >> "$GITHUB_OUTPUT"
+          #echo "contexts=[${contexts}]" >> "$GITHUB_OUTPUT"
+          echo "::set-output name=contexts::[${contexts}]"
 
   build-and-push-image:
     if: ${{ needs.check.outputs.contexts != '' }}
     strategy:
       matrix:
-        context: ${{ needs.check.outputs.contexts }}
+        context: ${{ fromJSON(needs.check.outputs.contexts) }}
     needs:
       - check
 
