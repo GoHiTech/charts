@@ -79,7 +79,7 @@ jobs:
           cache-from: type=registry,ref=ghcr.io/gohitech/${{ matrix.context }}:buildcache
           cache-to: type=registry,ref=ghcr.io/gohitech/${{ matrix.context }}:buildcache,mode=max
           context: build/${{ matrix.context }}
-          platforms: linux/amd64 linux/arm64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ghcr.io/gohitech/${{ matrix.context }}:${{ env.DOCKER_IMAGE_TAG }}
