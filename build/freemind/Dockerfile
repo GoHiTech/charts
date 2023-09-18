@@ -24,3 +24,11 @@ COPY --from=build /JavaPrograms/ /JavaPrograms/
 
 RUN chmod +x /JavaPrograms/freemind.sh \
  && ln -s /JavaPrograms/freemind.sh /usr/local/bin/freemind
+
+RUN echo 'user:x:501:20:User:/home/user:/bin/false' >>/etc/passwd \
+ && echo 'user:x:1000:1000:User:/home/user:/bin/false' >>/etc/passwd
+
+COPY ./ /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["freemind"]
+USER 1000
