@@ -17,7 +17,7 @@ FROM debian:stable-slim
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get -y install \
- openjdk-17-jre-headless \
+ openjdk-17-jre \
  && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /JavaPrograms/ /JavaPrograms/
